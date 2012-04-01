@@ -15,6 +15,7 @@
                                          flash-get]]
         [sandbar.core :only [cpath get-param property-lookup]]
         [sandbar.util :only [index-by]]
+        [clojure.tools.logging :only (info error)]
         [sandbar.validation :only [if-valid
                                    required-fields
                                    build-validator
@@ -707,9 +708,8 @@
                         (filter #(contains? hidden-types (:type %)) coll)))))))
 
 (defn unbind [form request bindings fields]
-  (do (println "unbind/form:")
-      (pretty/pprint form)
-      (println))
+  (do (info "unbind/form:")
+      (pretty/pprint form))
   (let [form-data (:form-data form)
         binding-fields (filter #(contains? #{:multi-checkbox
                                              :multi-select
@@ -745,9 +745,8 @@
      (let [form-state (-> (or (flash-get form-name)
                               {:form-data init-data})
                           (unbind request bindings fields))]
-       (do (println "form-layout-grid/form-state:")
-           (pretty/pprint form-state)
-           (println))
+       (do (info "form-layout-grid/form-state:")
+           (pretty/pprint form-state))
        (form-layout-grid* form-name layout form-state fields props))))
 
 (defmulti template (fn [& args] (first args)))
@@ -860,9 +859,8 @@
         on-cancel
         (let [form-data (marshal params)
               failure (get (-> request :headers) "referer")]
-          (do (println "marshal:")
-              (pretty/pprint form-data)
-              (println))
+          (do (info "marshal:")
+              (pretty/pprint form-data))
           (if-valid validator form-data
                     on-success
                     (store-errors-and-redirect name failure))))))))
