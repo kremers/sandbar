@@ -63,7 +63,7 @@
 
 (defn authenticate! [adapter params]
   (let [input (get-params [:username :password] params)
-        user-data (load-user adapter (:username input) (:password input))
+        user-data (load-user adapter (str (:username input)) (str (:password input)))
         success (or (session-get :auth-redirect-uri)
                     (property-lookup adapter :login-page))
         failure "login"]

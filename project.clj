@@ -1,4 +1,4 @@
-(defproject sandbar/sandbar "0.4.0-SNAPSHOT"
+(defproject sandbar/sandbar "0.4.1-SNAPSHOT"
   :description "Clojure web application libraries built on top of Ring
                 and Compojure."
   :url "http://github.com/brentonashworth/sandbar"
